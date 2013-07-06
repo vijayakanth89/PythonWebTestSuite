@@ -1,16 +1,6 @@
-
 import uuid
 import time
 from datetime import datetime
-
-__author__ = "Harikrishnan R"
-__copyright__ = "Copyright 2011, The MSF TestSuite Project"
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Harikrishnan R"
-__email__ = "harikrishnan@inxsasia.com"
-__status__ = "Development"
-
 
 import re
 def validate(request):
