@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<script src="html/js/jquery.js"></script>
+  	<script language="javaScript">
+
+  		function csv_parser(data) {
+
+			try {
+				var dataHashtable = new Array();
+				var records = data.split("|");
+				var headers = records[0].split(",");
+				for (var i = 1; i < records.length; i++) {
+					var datas = records[i].split(",");
+					var temp = {};
+					for (var j = 0; j < datas.length; j++ ) {
+						temp[headers[j]] = datas[j];
+					}
+
+					dataHashtable[i] = temp;
+				}
+			 } catch (e) {
+					 alert(e);
+			 }
+
+			var masterHashtable = new Array();
+			masterHashtable["HEADERS"] = headers;
+			masterHashtable["DATA"] = dataHashtable;
+
+			return masterHashtable;
+		}
+
+	</script>
+</head>
+<body>
+  <!-- the result of the search will be rendered inside this div -->
+  <div id="result"></div>
+
+  <script>
+  		$(document).ready(function() {
+    		$.post( "/", { "device_lists" : "dummy" } ,
+      			function( data ) {
+
+					var hashtable = csv_parser(data);
+					var headers = hashtable["HEADERS"];
+					var datas = hashtable["DATA"];
+
+					var div = document.getElementById('result');
+
+					var heading = document.createElement("h");
+					heading.appendChild(document.createTextNode("Broker Device Model | " + " App_version Connected_TIME"));
+					div.appendChild(heading);
+					div.appendChild(document.createElement("br"));
+
+					for (var i in datas) {
+						var record = datas[i];
+
+						var row = document.createElement("a");
+						row.setAttribute("href","/?app_id="
+								+ record["APP_ID"]);
+						row.appendChild(document.createTextNode(
+										record["ROUTER"] +  " " +
+										record["DEVICE"]  + " " +
+										record["MODEL"] + " " +
+										record["APP_VERSION"] + " " +
+										record["CONNECTED_TIME"]
+										));
+
+						div.appendChild(row);
+						div.appendChild(document.createElement("br"));
+					}
+
+      			}
+    		);
+		});
+  </script>
+
+</body>
+</html>

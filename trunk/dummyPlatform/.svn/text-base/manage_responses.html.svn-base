@@ -1,0 +1,34 @@
+<html>
+	<head>
+     	<link href="html/css/fileUploader.css" rel="stylesheet" type="text/css" />
+		<script src="html/js/jquery.js" type="text/javascript"></script>
+		<script src="html/js/manage_responses.js" type="text/javascript"></script>
+		<script src="html/js/jquery.fileUploader.js" type="text/javascript"></script>
+	</head>
+    <body> 
+		<div id="main_container">
+			<form action="/" method="post" enctype="multipart/form-data">
+				<input id="uploader" name="upfile" type="file" multiple="true" />
+                <br /><br /> 
+				<input type="submit" value="Upload"id="pxUpload" />
+				<input type="reset" value="Clear" id="pxClear" />
+            </form>
+
+			<script type="text/javascript">
+				$(function(){$("#uploader").fileUploader( 
+												{"callback":function(data) { handle_json(data); },
+												"app_id":"$app_id" }
+												);
+							}
+				);
+			</script>
+		</div>
+		
+		<div id="result"></div>
+
+        <script>
+			$(document).ready(main("$app_id",'$d'));
+		</script>
+
+	</body>
+</html>
